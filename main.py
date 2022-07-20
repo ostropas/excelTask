@@ -4,10 +4,6 @@ import os
 from multiprocessing import Pool, freeze_support, cpu_count
 
 import Levenshtein
-from cdifflib import CSequenceMatcher
-import difflib
-
-difflib.SequenceMatcher = CSequenceMatcher
 
 groupSize = 5
 padding = 2
