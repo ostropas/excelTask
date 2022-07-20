@@ -5,8 +5,8 @@ from multiprocessing import Pool, freeze_support, cpu_count
 
 import Levenshtein
 
-groupSize = 5
-padding = 2
+groupSize = 1
+padding = 0
 
 columnToCompare = 0
 percent = 0.8
@@ -56,15 +56,26 @@ if __name__ == '__main__':
         group2 = []
 
         for row in reader:
-            group1Item = row[0: groupSize]
-            if len(group1Item) > 0:
-                group1Item.append(group1Item[columnToCompare].lower())
-                group1.append(group1Item)
+            if groupSize == 1:
+                group1Item = [row[0]]
+                if len(group1Item) > 0:
+                    group1Item.append(group1Item[columnToCompare].lower())
+                    group1.append(group1Item)
 
-            group2Item = row[groupSize + padding: groupSize * 2 + padding]
-            if len(group2Item) > 0:
-                group2Item.append(group2Item[columnToCompare].lower())
-                group2.append(group2Item)
+                group2Item = [row[padding]]
+                if len(group2Item) > 0:
+                    group2Item.append(group2Item[columnToCompare].lower())
+                    group2.append(group2Item)
+            else:
+                group1Item = row[0: groupSize]
+                if len(group1Item) > 0:
+                    group1Item.append(group1Item[columnToCompare].lower())
+                    group1.append(group1Item)
+
+                group2Item = row[groupSize + padding: groupSize * 2 + padding]
+                if len(group2Item) > 0:
+                    group2Item.append(group2Item[columnToCompare].lower())
+                    group2.append(group2Item)
 
     all_args = []
 
