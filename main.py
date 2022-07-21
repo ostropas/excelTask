@@ -62,8 +62,8 @@ if __name__ == '__main__':
                     group1Item.append(group1Item[columnToCompare].lower())
                     group1.append(group1Item)
 
-                group2Item = [row[padding]]
-                if len(group2Item) > 0:
+                group2Item = [row[groupSize + padding]]
+                if group2Item[columnToCompare] != "":
                     group2Item.append(group2Item[columnToCompare].lower())
                     group2.append(group2Item)
             else:
@@ -85,6 +85,8 @@ if __name__ == '__main__':
     for i in range(0, cpuCount):
         start = part * i
         all_args.append([group1, group2, start, start + part])
+
+    all_args[cpuCount - 1][3] = length
 
     if os.name == "nt":
         freeze_support()
